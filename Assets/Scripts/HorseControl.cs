@@ -12,13 +12,16 @@ public class HorseControl : MonoBehaviour
     private Transform[] centerSpots;
     [SerializeField]
     private float horseSpeed = 0.1f;
+    [SerializeField]
+    private Transform horseParent;
+    [SerializeField]
+    private float halfTurnSpeedFactor;
     
     private Transform targetLocation;
     private int spotIndex;
     private Transform center;
     private float timeCounter = 0f;
-    private float timeCounterOffset = 0f;
-    private float distance = 0.55f;
+    private float timeCounterOffset = Mathf.PI / 2.0f;
     private bool isMoving = false;
 
     void Start()
@@ -33,23 +36,23 @@ public class HorseControl : MonoBehaviour
         if (spotIndex == 1) 
         {
             center = centerSpots[0];
-            halfTurn(transform);
+            halfTurn(horseParent);
             halfTurn(player);
         }
         else if (spotIndex == 3)
         {
             center = centerSpots[1];
-            halfTurn(transform);
+            halfTurn(horseParent);
             halfTurn(player);
         }
         else
         {
-            linearMovement(transform);
+            linearMovement(horseParent);
             linearMovement(player);
         }
             
 
-        if ((transform.position - targetLocation.transform.position).magnitude <= 0.02f)
+        if ((horseParent.position - targetLocation.transform.position).magnitude <= 0.05f)
         {
             spotIndex++;
 
@@ -62,11 +65,22 @@ public class HorseControl : MonoBehaviour
 
     private void linearMovement(Transform toMove)
     {
-        toMove.position = Vector3.MoveTowards(toMove.position, targetLocation.position, horseSpeed * Time.deltaTime);
+        float y = toMove.position.y;
+        Vector3 newPosition = Vector3.MoveTowards(toMove.position, targetLocation.position, horseSpeed * Time.deltaTime);
+        newPosition.y = y;
+
+        toMove.position = newPosition;
     }
 
-    private void halfTurn(Transform toMove) {
-        timeCounter += Time.deltaTime * horseSpeed;
+    private void halfTurn(Transform toMove)
+    {
+        Vector3 positionDiff = (toMove.transform.position - center.position);
+        positionDiff.y = 0.0f;
+        float distance = positionDiff.magnitude;
+
+        // distance = 3.0f;
+
+        timeCounter += Time.deltaTime * horseSpeed * halfTurnSpeedFactor;
 
         float x = center.position.x + Mathf.Cos(timeCounter + timeCounterOffset) * distance;
         float z = center.position.z + Mathf.Sin(timeCounter + timeCounterOffset) * distance;
