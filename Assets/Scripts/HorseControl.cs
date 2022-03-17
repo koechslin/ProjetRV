@@ -37,18 +37,18 @@ public class HorseControl : MonoBehaviour
         {
             center = centerSpots[0];
             halfTurn(horseParent);
-            halfTurn(player);
+            // halfTurn(player);
         }
         else if (spotIndex == 3)
         {
             center = centerSpots[1];
             halfTurn(horseParent);
-            halfTurn(player);
+            // halfTurn(player);
         }
         else
         {
             linearMovement(horseParent);
-            linearMovement(player);
+            // linearMovement(player);
         }
             
 
