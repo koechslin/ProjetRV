@@ -1,4 +1,4 @@
-using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.XR.Interaction.Toolkit;
@@ -19,8 +19,15 @@ public class HorseInteraction : XRBaseInteractable
     private Transform playerStopPoint;
     [SerializeField]
     private Text uiText;
+    [SerializeField]
+    private ActionBasedController[] controllers;
+    [SerializeField]
+    private float hapticAmplitude;
+    [SerializeField]
+    private float hapticDuration;
 
     private bool isOnHorse = false;
+    private Coroutine hapticCoroutineInstance;
 
     public override void ProcessInteractable(XRInteractionUpdateOrder.UpdatePhase updatePhase)
     {
@@ -67,6 +74,9 @@ public class HorseInteraction : XRBaseInteractable
         horseControl.enabled = true;
         isOnHorse = true;
         CloseUI();
+
+        // Haptic
+        hapticCoroutineInstance = StartCoroutine("HapticCoroutine");
     }
 
     public void OnHorseEnd()
@@ -76,8 +86,23 @@ public class HorseInteraction : XRBaseInteractable
         // Stop horse
         horseControl.enabled = false;
 
+        // Stop haptic
+        StopCoroutine(hapticCoroutineInstance);
+
         // Prompt player for another lap
         uiText.text = "Voulez-vous refaire un tour ?";
         confirmationUI.SetActive(true);
+    }
+
+    private IEnumerator HapticCoroutine()
+    {
+        while (true)
+        {
+            foreach (ActionBasedController xrController in controllers)
+            {
+                xrController.SendHapticImpulse(hapticAmplitude, hapticDuration);
+            }
+            yield return null;
+        }
     }
 }

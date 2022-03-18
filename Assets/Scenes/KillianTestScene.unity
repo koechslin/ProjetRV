@@ -17028,6 +17028,12 @@ MonoBehaviour:
   horseTransform: {fileID: 1140085867}
   playerPositionOffset: {x: 0, y: 2, z: 0}
   playerStopPoint: {fileID: 1250447127}
+  uiText: {fileID: 0}
+  controllers:
+  - {fileID: 357001993}
+  - {fileID: 807472352}
+  hapticAmplitude: 1
+  hapticDuration: 0.1
 --- !u!54 &1140085870
 Rigidbody:
   m_ObjectHideFlags: 0
