@@ -8530,7 +8530,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1140085869}
         m_TargetAssemblyTypeName: HorseInteraction, Assembly-CSharp
-        m_MethodName: CloseUI
+        m_MethodName: OnInteractionDeclined
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

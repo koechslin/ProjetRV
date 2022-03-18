@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.XR.Interaction.Toolkit;
 
 public class HorseInteraction : XRBaseInteractable
@@ -16,6 +17,8 @@ public class HorseInteraction : XRBaseInteractable
     private Vector3 playerPositionOffset;
     [SerializeField]
     private Transform playerStopPoint;
+    [SerializeField]
+    private Text uiText;
 
     private bool isOnHorse = false;
 
@@ -30,7 +33,21 @@ public class HorseInteraction : XRBaseInteractable
 
     private void OnHorseGrab()
     {
+        uiText.text = "Voulez-vous faire un tour de joute ?";
         confirmationUI.SetActive(true);
+    }
+
+    public void OnInteractionDeclined()
+    {
+        CloseUI();
+
+        if (!isOnHorse) return;
+
+        playerTransform.parent = null;
+        playerTransform.position = playerStopPoint.position;
+        playerTransform.forward = playerStopPoint.forward;
+
+        isOnHorse = false;
     }
 
     public void CloseUI()
@@ -40,8 +57,6 @@ public class HorseInteraction : XRBaseInteractable
 
     public void OnInteractionConfirmation()
     {
-        if (isOnHorse) return;
-
         // Place player on top of the horse
         playerTransform.parent = horseTransform;
         playerTransform.forward = horseTransform.forward;
@@ -56,11 +71,11 @@ public class HorseInteraction : XRBaseInteractable
     {
         if (!isOnHorse) return;
 
-        playerTransform.parent = null;
-        playerTransform.position = playerStopPoint.position;
-        playerTransform.forward = playerStopPoint.forward;
-
+        // Stop horse
         horseControl.enabled = false;
-        isOnHorse = false;
+
+        // Prompt player for another lap
+        uiText.text = "Voulez-vous refaire un tour ?";
+        confirmationUI.SetActive(true);
     }
 }
