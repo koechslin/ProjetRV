@@ -62,6 +62,8 @@ public class HorseInteraction : XRBaseInteractable
         playerTransform.forward = horseTransform.forward;
         playerTransform.localPosition = playerPositionOffset;
 
+        playerTransform.GetComponentInChildren<LocomotionSystem>().enabled = false;
+
         horseControl.enabled = true;
         isOnHorse = true;
         CloseUI();
