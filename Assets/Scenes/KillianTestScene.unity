@@ -16594,7 +16594,6 @@ GameObject:
   - component: {fileID: 1140085869}
   - component: {fileID: 1140085868}
   - component: {fileID: 1140085870}
-  - component: {fileID: 1140085871}
   m_Layer: 0
   m_Name: Horse Parent
   m_TagString: Horse
@@ -16720,7 +16719,7 @@ MonoBehaviour:
   - {fileID: 417317119}
   hapticAmplitude: 1
   hapticDuration: 0.1
-  animator: {fileID: 1140085871}
+  animator: {fileID: 1999168653}
 --- !u!54 &1140085870
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -16737,25 +16736,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!95 &1140085871
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1140085866}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 1f8784f1a0493b044a37ad49221ee7a5, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &1141447882
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -28598,6 +28578,25 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1999168649}
   m_PrefabAsset: {fileID: 0}
+--- !u!95 &1999168653
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1999168650}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 1f8784f1a0493b044a37ad49221ee7a5, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &2003427907
 PrefabInstance:
   m_ObjectHideFlags: 0
