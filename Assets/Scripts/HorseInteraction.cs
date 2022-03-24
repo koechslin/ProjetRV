@@ -25,6 +25,8 @@ public class HorseInteraction : XRBaseInteractable
     private float hapticAmplitude;
     [SerializeField]
     private float hapticDuration;
+    [SerializeField]
+    private Animator animator;
 
     private bool isOnHorse = false;
     private Coroutine hapticCoroutineInstance;
@@ -77,6 +79,8 @@ public class HorseInteraction : XRBaseInteractable
 
         // Haptic
         hapticCoroutineInstance = StartCoroutine("HapticCoroutine");
+        //Start running animation
+        animator.SetBool("IsRunning", true);
     }
 
     public void OnHorseEnd()
@@ -88,6 +92,8 @@ public class HorseInteraction : XRBaseInteractable
 
         // Stop haptic
         StopCoroutine(hapticCoroutineInstance);
+        //Stop running animation
+        animator.SetBool("IsRunning", false);
 
         // Prompt player for another lap
         uiText.text = "Voulez-vous refaire un tour ?";
