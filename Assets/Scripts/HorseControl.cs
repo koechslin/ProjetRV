@@ -23,9 +23,13 @@ public class HorseControl : MonoBehaviour
     private float timeCounter = 0f;
     private float timeCounterOffset = Mathf.PI / 2.0f;
     private bool isMoving = false;
+    private float baseSpeed = 0.0f;
+
+    public bool isDeccelerating;
 
     void Start()
     {
+        isDeccelerating = true;
         spotIndex = 0;
         targetLocation = spots[spotIndex];
     }
@@ -60,6 +64,8 @@ public class HorseControl : MonoBehaviour
                 spotIndex = 0;
 
             targetLocation = spots[spotIndex];
+
+            if ((spotIndex == 0 || spotIndex == 2) && isDeccelerating) StartCoroutine(AccelerationCoroutine());
         }
     }
 
@@ -93,5 +99,40 @@ public class HorseControl : MonoBehaviour
         {
                 isMoving = false;
         }*/
+    }
+
+    public IEnumerator DeccelerationCoroutine()
+    {
+        isDeccelerating = true;
+        baseSpeed = horseSpeed;
+
+        for (int i = 0; i < 9; ++i)
+        {
+            horseSpeed -= baseSpeed / 10f;
+            yield return new WaitForSeconds(0.25f);
+        }
+
+        yield return null;
+    }
+
+    public IEnumerator AccelerationCoroutine()
+    {
+        for (int i = 0; i < 9; ++i)
+        {
+            horseSpeed += baseSpeed / 10f;
+            yield return new WaitForSeconds(0.25f);
+        }
+
+        yield return null;
+    }
+
+    public float GetHorseSpeed()
+    {
+        return horseSpeed;
+    }
+
+    public void SetHorseSpeed(float speed)
+    {
+        horseSpeed = speed;
     }
 }

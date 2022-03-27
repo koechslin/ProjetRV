@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.UI;
 using UnityEngine.XR.Interaction.Toolkit;
 
@@ -27,6 +28,8 @@ public class HorseInteraction : XRBaseInteractable
     private float hapticDuration;
     [SerializeField]
     private Animator animator;
+    [SerializeField]
+    private PostProcessLayer postProcessLayer;
 
     private bool isOnHorse = false;
     private Coroutine hapticCoroutineInstance;
@@ -48,6 +51,8 @@ public class HorseInteraction : XRBaseInteractable
 
     public void OnInteractionDeclined()
     {
+        postProcessLayer.enabled = false;
+
         CloseUI();
 
         if (!isOnHorse) return;
@@ -66,6 +71,8 @@ public class HorseInteraction : XRBaseInteractable
 
     public void OnInteractionConfirmation()
     {
+        postProcessLayer.enabled = true;
+
         // Place player on top of the horse
         playerTransform.parent = horseTransform;
         playerTransform.forward = horseTransform.forward;
@@ -78,7 +85,7 @@ public class HorseInteraction : XRBaseInteractable
         CloseUI();
 
         // Haptic
-        hapticCoroutineInstance = StartCoroutine("HapticCoroutine");
+        // hapticCoroutineInstance = StartCoroutine("HapticCoroutine");
         //Start running animation
         animator.SetBool("IsRunning", true);
     }
@@ -91,7 +98,7 @@ public class HorseInteraction : XRBaseInteractable
         horseControl.enabled = false;
 
         // Stop haptic
-        StopCoroutine(hapticCoroutineInstance);
+        // StopCoroutine(hapticCoroutineInstance);
         //Stop running animation
         animator.SetBool("IsRunning", false);
 
