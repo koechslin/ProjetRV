@@ -5,7 +5,11 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class TeleportationManager : MonoBehaviour
 {
     [SerializeField]
-    private InputActionAsset actionAsset;
+    private InputActionReference activateActionReference;
+    [SerializeField]
+    private InputActionReference cancelActionReference;
+    [SerializeField]
+    private InputActionReference thumbstickActionReference;
     [SerializeField]
     private XRRayInteractor xrRayInteractor;
     [SerializeField]
@@ -18,15 +22,15 @@ public class TeleportationManager : MonoBehaviour
     {
         xrRayInteractor.enabled = false;
 
-        InputAction activate = actionAsset.FindActionMap("XRI RightHand").FindAction("Teleport Mode Activate");
+        InputAction activate = activateActionReference.action;
         activate.Enable();
         activate.performed += OnTeleportActivate;
 
-        InputAction cancel = actionAsset.FindActionMap("XRI RightHand").FindAction("Teleport Mode Cancel");
+        InputAction cancel = cancelActionReference.action;
         cancel.Enable();
         cancel.performed += OnTeleportCancel;
 
-        thumbstick = actionAsset.FindActionMap("XRI RightHand").FindAction("Move");
+        thumbstick = thumbstickActionReference.action;
         thumbstick.Enable();
     }
 
