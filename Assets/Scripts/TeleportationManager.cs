@@ -16,6 +16,8 @@ public class TeleportationManager : MonoBehaviour
     private XRRayInteractor xrRayInteractor;
     [SerializeField]
     private TeleportationProvider teleportationProvider;
+    [SerializeField]
+    private GameObject teleportReticle;
 
 
     private InputAction thumbstick;
@@ -24,6 +26,8 @@ public class TeleportationManager : MonoBehaviour
 
     private void Start()
     {
+        teleportReticle.SetActive(false);
+
         xrRayInteractor.enabled = false;
 
         InputAction activate = activateActionReference.action;
@@ -64,6 +68,7 @@ public class TeleportationManager : MonoBehaviour
 
         xrRayInteractor.enabled = false;
         isActive = false;
+        teleportReticle.SetActive(false);
     }
 
     private void OnTeleportActivatePerformed(InputAction.CallbackContext callbackContext)
@@ -73,6 +78,7 @@ public class TeleportationManager : MonoBehaviour
         buttonReleased = false;
         xrRayInteractor.enabled = true;
         isActive = true;
+        teleportReticle.SetActive(true);
     }
 
     private void OnTeleportActivateCanceled(InputAction.CallbackContext callbackContext)
@@ -84,5 +90,6 @@ public class TeleportationManager : MonoBehaviour
     {
         xrRayInteractor.enabled = false;
         isActive = false;
+        teleportReticle.SetActive(false);
     }
 }
