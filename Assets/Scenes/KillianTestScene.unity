@@ -20328,8 +20328,8 @@ MonoBehaviour:
   controllers:
   - {fileID: 278421455}
   - {fileID: 1136820495}
-  hapticAmplitude: 1
-  hapticDuration: 0.1
+  hapticAmplitude: 0.2
+  hapticDuration: 0.2
   animator: {fileID: 355756664}
   postProcessLayer: {fileID: 616352638}
 --- !u!1001 &1274984316

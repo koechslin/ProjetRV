@@ -85,7 +85,7 @@ public class HorseInteraction : XRBaseInteractable
         CloseUI();
 
         // Haptic
-        // hapticCoroutineInstance = StartCoroutine("HapticCoroutine");
+        hapticCoroutineInstance = StartCoroutine("HapticCoroutine");
         //Start running animation
         animator.SetBool("IsRunning", true);
     }
@@ -98,7 +98,7 @@ public class HorseInteraction : XRBaseInteractable
         horseControl.enabled = false;
 
         // Stop haptic
-        // StopCoroutine(hapticCoroutineInstance);
+        StopCoroutine(hapticCoroutineInstance);
         //Stop running animation
         animator.SetBool("IsRunning", false);
 
@@ -115,7 +115,21 @@ public class HorseInteraction : XRBaseInteractable
             {
                 xrController.SendHapticImpulse(hapticAmplitude, hapticDuration);
             }
-            yield return null;
+            yield return new WaitForSeconds(0.4f);
+
+            foreach (ActionBasedController xrController in controllers)
+            {
+                xrController.SendHapticImpulse(hapticAmplitude, hapticDuration);
+            }
+            yield return new WaitForSeconds(0.4f);
+
+            foreach (ActionBasedController xrController in controllers)
+            {
+                xrController.SendHapticImpulse(hapticAmplitude, hapticDuration);
+            }
+            yield return new WaitForSeconds(0.4f);
+
+            yield return new WaitForSeconds(1.5f);
         }
     }
 }
