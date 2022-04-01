@@ -9,14 +9,18 @@ public class TeleportationManager : MonoBehaviour
     [SerializeField]
     private InputActionReference cancelActionReference;
     [SerializeField]
-    private InputActionReference thumbstickActionReference;
+    private InputActionReference confirmTeleportActionReference;
+    // [SerializeField]
+    // private InputActionReference thumbstickActionReference;
     [SerializeField]
     private XRRayInteractor xrRayInteractor;
     [SerializeField]
     private TeleportationProvider teleportationProvider;
 
+
     private InputAction thumbstick;
     private bool isActive;
+    private bool buttonReleased = true;
 
     private void Start()
     {
@@ -24,21 +28,24 @@ public class TeleportationManager : MonoBehaviour
 
         InputAction activate = activateActionReference.action;
         activate.Enable();
-        activate.performed += OnTeleportActivate;
+        activate.performed += OnTeleportActivatePerformed;
+        activate.canceled += OnTeleportActivateCanceled;
 
         InputAction cancel = cancelActionReference.action;
         cancel.Enable();
         cancel.performed += OnTeleportCancel;
 
-        thumbstick = thumbstickActionReference.action;
-        thumbstick.Enable();
+        // thumbstick = thumbstickActionReference.action;
+        // thumbstick.Enable();
+
+        confirmTeleportActionReference.action.performed += ConfirmTeleport;
     }
 
-    private void Update()
+    private void ConfirmTeleport(InputAction.CallbackContext callbackContext)
     {
-        if (!isActive) return;
+        if (!isActive || !buttonReleased) return;
 
-        if (thumbstick.triggered) return;
+        buttonReleased = false;
 
         if (!xrRayInteractor.TryGetCurrent3DRaycastHit(out RaycastHit hit))
         {
@@ -59,10 +66,18 @@ public class TeleportationManager : MonoBehaviour
         isActive = false;
     }
 
-    private void OnTeleportActivate(InputAction.CallbackContext callbackContext)
+    private void OnTeleportActivatePerformed(InputAction.CallbackContext callbackContext)
     {
+        if (isActive || !buttonReleased) return;
+
+        buttonReleased = false;
         xrRayInteractor.enabled = true;
         isActive = true;
+    }
+
+    private void OnTeleportActivateCanceled(InputAction.CallbackContext callbackContext)
+    {
+        buttonReleased = true;
     }
 
     private void OnTeleportCancel(InputAction.CallbackContext callbackContext)

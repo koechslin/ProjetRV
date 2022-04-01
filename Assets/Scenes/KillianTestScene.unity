@@ -26816,11 +26816,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77466aec66ce5604abac615dd8ffbcaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activateActionReference: {fileID: -8061240218431744966, guid: c348712bda248c246b8c49b3db54643f,
+  activateActionReference: {fileID: -8795625221442556941, guid: c348712bda248c246b8c49b3db54643f,
     type: 3}
-  cancelActionReference: {fileID: 2307464322626738743, guid: c348712bda248c246b8c49b3db54643f,
+  cancelActionReference: {fileID: 268019400663751851, guid: c348712bda248c246b8c49b3db54643f,
     type: 3}
-  thumbstickActionReference: {fileID: -8198699208435500284, guid: c348712bda248c246b8c49b3db54643f,
+  confirmTeleportActionReference: {fileID: -8795625221442556941, guid: c348712bda248c246b8c49b3db54643f,
     type: 3}
   xrRayInteractor: {fileID: 1208733124}
   teleportationProvider: {fileID: 1748391155}
