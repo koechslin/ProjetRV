@@ -1,12 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.XR.Interaction.Toolkit;
 
-public class TriggerArea : XRBaseInteractor
+public class TriggerArea : MonoBehaviour
 {
+    [SerializeField]
+    private CharacterInteraction characterInteraction;
+
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Test");
+        if (!other.gameObject.layer.Equals(LayerMask.NameToLayer("Player"))) return;
+
+        characterInteraction.enabled = true;
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (!other.gameObject.layer.Equals(LayerMask.NameToLayer("Player"))) return;
+
+        characterInteraction.enabled = false;
     }
 }
