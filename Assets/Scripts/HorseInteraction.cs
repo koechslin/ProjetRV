@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.UI;
 using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.InputSystem;
 
 public class HorseInteraction : XRBaseInteractable
 {
@@ -29,7 +31,13 @@ public class HorseInteraction : XRBaseInteractable
     [SerializeField]
     private Animator animator;
     [SerializeField]
-    private PostProcessLayer postProcessLayer;
+    private GameObject postProcessVolume;
+    [SerializeField]
+    private TeleportationManager teleportationManager;
+    [SerializeField]
+    private InputActionReference selectAction;
+    [SerializeField]
+    private float hapticCoef;
 
     private bool isOnHorse = false;
     private Coroutine hapticCoroutineInstance;
@@ -40,10 +48,21 @@ public class HorseInteraction : XRBaseInteractable
 
         if (!isSelected) return;
 
-        OnHorseGrab();
+        // OnHorseGrab();
     }
 
-    private void OnHorseGrab()
+    private void OnTriggerStay(Collider other)
+    {
+        if (!other.gameObject.layer.Equals(LayerMask.NameToLayer("Player"))) return;
+
+        if (selectAction.action.WasPerformedThisFrame())
+        {
+            if (isOnHorse) return;
+            OnHorseSelect();
+        }
+    }
+
+    private void OnHorseSelect()
     {
         uiText.text = "Voulez-vous faire un tour de joute ?";
         confirmationUI.SetActive(true);
@@ -51,7 +70,8 @@ public class HorseInteraction : XRBaseInteractable
 
     public void OnInteractionDeclined()
     {
-        postProcessLayer.enabled = false;
+        postProcessVolume.SetActive(false);
+        teleportationManager.enabled = true;
 
         CloseUI();
 
@@ -71,7 +91,8 @@ public class HorseInteraction : XRBaseInteractable
 
     public void OnInteractionConfirmation()
     {
-        postProcessLayer.enabled = true;
+        postProcessVolume.SetActive(true);
+        teleportationManager.enabled = false;
 
         // Place player on top of the horse
         playerTransform.parent = horseTransform;
@@ -97,6 +118,8 @@ public class HorseInteraction : XRBaseInteractable
         // Stop horse
         horseControl.enabled = false;
 
+        animator.speed = 1.0f;
+
         // Stop haptic
         StopCoroutine(hapticCoroutineInstance);
         //Stop running animation
@@ -115,21 +138,21 @@ public class HorseInteraction : XRBaseInteractable
             {
                 xrController.SendHapticImpulse(hapticAmplitude, hapticDuration);
             }
-            yield return new WaitForSeconds(0.4f);
+            yield return new WaitForSeconds(hapticCoef * 1.0f / horseControl.GetHorseSpeed());
 
             foreach (ActionBasedController xrController in controllers)
             {
                 xrController.SendHapticImpulse(hapticAmplitude, hapticDuration);
             }
-            yield return new WaitForSeconds(0.4f);
+            yield return new WaitForSeconds(hapticCoef * 1.0f / horseControl.GetHorseSpeed());
 
             foreach (ActionBasedController xrController in controllers)
             {
                 xrController.SendHapticImpulse(hapticAmplitude, hapticDuration);
             }
-            yield return new WaitForSeconds(0.4f);
+            // yield return new WaitForSeconds(0.4f);
 
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(3 * hapticCoef * 1.0f / horseControl.GetHorseSpeed());
         }
     }
 }

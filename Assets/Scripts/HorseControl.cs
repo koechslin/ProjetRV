@@ -16,7 +16,11 @@ public class HorseControl : MonoBehaviour
     private Transform horseParent;
     [SerializeField]
     private float halfTurnSpeedFactor;
-    
+    [SerializeField]
+    private Animator animator;
+    [SerializeField]
+    private float animCoefSpeed;
+
     private Transform targetLocation;
     private int spotIndex;
     private Transform center;
@@ -37,6 +41,15 @@ public class HorseControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (spotIndex != 1 && spotIndex != 3)
+        {
+            animator.speed = horseSpeed * animCoefSpeed;
+        }
+        else
+        {
+            animator.speed = 1.0f;
+        }
+
         if (spotIndex == 1) 
         {
             center = centerSpots[0];
@@ -106,7 +119,7 @@ public class HorseControl : MonoBehaviour
         isDeccelerating = true;
         baseSpeed = horseSpeed;
 
-        for (int i = 0; i < 9; ++i)
+        for (int i = 0; i < 7; ++i)
         {
             horseSpeed -= baseSpeed / 10f;
             yield return new WaitForSeconds(0.25f);
@@ -117,7 +130,7 @@ public class HorseControl : MonoBehaviour
 
     public IEnumerator AccelerationCoroutine()
     {
-        for (int i = 0; i < 9; ++i)
+        for (int i = 0; i < 7; ++i)
         {
             horseSpeed += baseSpeed / 10f;
             yield return new WaitForSeconds(0.25f);

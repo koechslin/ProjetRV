@@ -29,7 +29,10 @@ public class TeleportationManager : MonoBehaviour
         teleportReticle.SetActive(false);
 
         xrRayInteractor.enabled = false;
+    }
 
+    private void OnEnable()
+    {
         InputAction activate = activateActionReference.action;
         activate.Enable();
         activate.performed += OnTeleportActivatePerformed;
@@ -45,18 +48,35 @@ public class TeleportationManager : MonoBehaviour
         confirmTeleportActionReference.action.performed += ConfirmTeleport;
     }
 
+    private void OnDisable()
+    {
+        InputAction activate = activateActionReference.action;
+        activate.performed -= OnTeleportActivatePerformed;
+        activate.canceled -= OnTeleportActivateCanceled;
+
+        InputAction cancel = cancelActionReference.action;
+        cancel.performed -= OnTeleportCancel;
+
+        // thumbstick = thumbstickActionReference.action;
+        // thumbstick.Enable();
+
+        confirmTeleportActionReference.action.performed -= ConfirmTeleport;
+    }
+
     private void ConfirmTeleport(InputAction.CallbackContext callbackContext)
     {
         if (!isActive || !buttonReleased) return;
 
         buttonReleased = false;
 
-        if (!xrRayInteractor.TryGetCurrent3DRaycastHit(out RaycastHit hit))
+        if (!xrRayInteractor.TryGetCurrent3DRaycastHit(out RaycastHit hit) )
         {
             xrRayInteractor.enabled = false;
             isActive = false;
             return;
         }
+
+        if (hit.collider.gameObject.layer != LayerMask.NameToLayer("Teleport")) return;
 
         TeleportRequest request = new TeleportRequest()
         {

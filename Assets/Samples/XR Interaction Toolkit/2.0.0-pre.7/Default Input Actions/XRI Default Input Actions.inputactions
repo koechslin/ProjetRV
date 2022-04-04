@@ -1172,6 +1172,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "SelectBoth",
+                    "type": "Button",
+                    "id": "8ee3f992-2ac6-40f4-b7cc-2a65b025e15a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -1260,6 +1269,28 @@
                     "processors": "",
                     "groups": "Generic XR Controller",
                     "action": "Grip Value Right",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bb445b07-e5dd-4e50-bc86-ffb14621c555",
+                    "path": "<XRController>{LeftHand}/triggerPressed",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Generic XR Controller",
+                    "action": "SelectBoth",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e9141d57-e30d-4700-91e1-f4b1e9d1c3a3",
+                    "path": "<XRController>{RightHand}/triggerPressed",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SelectBoth",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
