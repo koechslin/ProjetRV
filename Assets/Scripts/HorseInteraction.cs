@@ -38,6 +38,8 @@ public class HorseInteraction : XRBaseInteractable
     private InputActionReference selectAction;
     [SerializeField]
     private float hapticCoef;
+    [SerializeField]
+    private GameObject spear;
 
     private bool isOnHorse = false;
     private Coroutine hapticCoroutineInstance;
@@ -109,6 +111,12 @@ public class HorseInteraction : XRBaseInteractable
         hapticCoroutineInstance = StartCoroutine("HapticCoroutine");
         //Start running animation
         animator.SetBool("IsRunning", true);
+
+        CreateSpear();
+    }
+
+    private void CreateSpear(){
+        spear.SetActive(true);
     }
 
     public void OnHorseEnd()
