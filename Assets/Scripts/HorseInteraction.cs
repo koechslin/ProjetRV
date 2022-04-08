@@ -9,7 +9,9 @@ using UnityEngine.InputSystem;
 public class HorseInteraction : XRBaseInteractable
 {
     [SerializeField]
-    private HorseControl horseControl;
+    private HorseControl playerHorseControl;
+    [SerializeField]
+    private HorseControl trainingHorseControl;
     [SerializeField]
     private GameObject confirmationUI;
     [SerializeField]
@@ -29,7 +31,9 @@ public class HorseInteraction : XRBaseInteractable
     [SerializeField]
     private float hapticDuration;
     [SerializeField]
-    private Animator animator;
+    private Animator playerHorseAnimator;
+    [SerializeField]
+    private Animator trainingHorseAnimator;
     [SerializeField]
     private GameObject postProcessVolume;
     [SerializeField]
@@ -40,6 +44,8 @@ public class HorseInteraction : XRBaseInteractable
     private float hapticCoef;
     [SerializeField]
     private GameObject spear;
+    [SerializeField]
+    private GameObject trainingHorseParent;
 
     private bool isOnHorse = false;
     private Coroutine hapticCoroutineInstance;
@@ -86,6 +92,8 @@ public class HorseInteraction : XRBaseInteractable
         isOnHorse = false;
 
         spear.SetActive(false);
+
+        trainingHorseParent.SetActive(false);
     }
 
     public void CloseUI()
@@ -105,14 +113,18 @@ public class HorseInteraction : XRBaseInteractable
 
         playerTransform.GetComponentInChildren<LocomotionSystem>().enabled = false;
 
-        horseControl.enabled = true;
+        trainingHorseParent.SetActive(true);
+
+        playerHorseControl.enabled = true;
+        trainingHorseControl.enabled = true;
         isOnHorse = true;
         CloseUI();
 
         // Haptic
         hapticCoroutineInstance = StartCoroutine("HapticCoroutine");
         //Start running animation
-        animator.SetBool("IsRunning", true);
+        playerHorseAnimator.SetBool("IsRunning", true);
+        trainingHorseAnimator.SetBool("IsRunning", true);
 
         spear.SetActive(true);
     }
@@ -122,14 +134,17 @@ public class HorseInteraction : XRBaseInteractable
         if (!isOnHorse) return;
 
         // Stop horse
-        horseControl.enabled = false;
+        playerHorseControl.enabled = false;
+        trainingHorseControl.enabled = false;
 
-        animator.speed = 1.0f;
+        playerHorseAnimator.speed = 1.0f;
+        trainingHorseAnimator.speed = 1.0f;
 
         // Stop haptic
         StopCoroutine(hapticCoroutineInstance);
         //Stop running animation
-        animator.SetBool("IsRunning", false);
+        playerHorseAnimator.SetBool("IsRunning", false);
+        trainingHorseAnimator.SetBool("IsRunning", false);
 
         // Prompt player for another lap
         uiText.text = "Voulez-vous refaire un tour ?";
@@ -144,13 +159,13 @@ public class HorseInteraction : XRBaseInteractable
             {
                 xrController.SendHapticImpulse(hapticAmplitude, hapticDuration);
             }
-            yield return new WaitForSeconds(hapticCoef * 1.0f / horseControl.GetHorseSpeed());
+            yield return new WaitForSeconds(hapticCoef * 1.0f / playerHorseControl.GetHorseSpeed());
 
             foreach (ActionBasedController xrController in controllers)
             {
                 xrController.SendHapticImpulse(hapticAmplitude, hapticDuration);
             }
-            yield return new WaitForSeconds(hapticCoef * 1.0f / horseControl.GetHorseSpeed());
+            yield return new WaitForSeconds(hapticCoef * 1.0f / playerHorseControl.GetHorseSpeed());
 
             foreach (ActionBasedController xrController in controllers)
             {
@@ -158,7 +173,7 @@ public class HorseInteraction : XRBaseInteractable
             }
             // yield return new WaitForSeconds(0.4f);
 
-            yield return new WaitForSeconds(3 * hapticCoef * 1.0f / horseControl.GetHorseSpeed());
+            yield return new WaitForSeconds(3 * hapticCoef * 1.0f / playerHorseControl.GetHorseSpeed());
         }
     }
 }

@@ -20,12 +20,13 @@ public class HorseControl : MonoBehaviour
     private Animator animator;
     [SerializeField]
     private float animCoefSpeed;
+    [SerializeField]
+    private float timeCounterOffset;
 
     private Transform targetLocation;
     private int spotIndex;
     private Transform center;
     private float timeCounter = 0f;
-    private float timeCounterOffset = Mathf.PI / 2.0f;
     private bool isMoving = false;
     private float baseSpeed = 0.0f;
 
