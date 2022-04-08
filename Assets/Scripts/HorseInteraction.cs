@@ -84,6 +84,8 @@ public class HorseInteraction : XRBaseInteractable
         playerTransform.forward = playerStopPoint.forward;
 
         isOnHorse = false;
+
+        spear.SetActive(false);
     }
 
     public void CloseUI()
@@ -112,10 +114,6 @@ public class HorseInteraction : XRBaseInteractable
         //Start running animation
         animator.SetBool("IsRunning", true);
 
-        CreateSpear();
-    }
-
-    private void CreateSpear(){
         spear.SetActive(true);
     }
 
