@@ -1,12 +1,10 @@
-using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.UI;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.InputSystem;
 
-public class HorseInteraction : XRBaseInteractable
+public class HorseInteraction : MonoBehaviour
 {
     [SerializeField]
     private HorseControl playerHorseControl;
@@ -49,29 +47,31 @@ public class HorseInteraction : XRBaseInteractable
 
     private bool isOnHorse = false;
     private Coroutine hapticCoroutineInstance;
+    private bool isNear = false;
 
-    public override void ProcessInteractable(XRInteractionUpdateOrder.UpdatePhase updatePhase)
+    private void Start()
     {
-        base.ProcessInteractable(updatePhase);
-
-        if (!isSelected) return;
-
-        // OnHorseGrab();
+        selectAction.action.performed += OnHorseSelect;
     }
 
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if (!other.gameObject.layer.Equals(LayerMask.NameToLayer("Player"))) return;
 
-        if (selectAction.action.WasPerformedThisFrame())
-        {
-            if (isOnHorse) return;
-            OnHorseSelect();
-        }
+        isNear = true;
     }
 
-    private void OnHorseSelect()
+    private void OnTriggerExit(Collider other)
     {
+        if (!other.gameObject.layer.Equals(LayerMask.NameToLayer("Player"))) return;
+
+        isNear = false;
+    }
+
+    private void OnHorseSelect(InputAction.CallbackContext callbackContext)
+    {
+        if (isOnHorse || !isNear) return;
+
         uiText.text = "Voulez-vous faire un tour de joute ?";
         confirmationUI.SetActive(true);
     }
