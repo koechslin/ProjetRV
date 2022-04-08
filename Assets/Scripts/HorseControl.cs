@@ -1,5 +1,5 @@
+using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class HorseControl : MonoBehaviour
@@ -22,6 +22,8 @@ public class HorseControl : MonoBehaviour
     private float animCoefSpeed;
     [SerializeField]
     private float timeCounterOffset;
+    [SerializeField]
+    private AudioSource gallopAudioSource;
 
     private Transform targetLocation;
     private int spotIndex;
@@ -37,11 +39,24 @@ public class HorseControl : MonoBehaviour
         isDeccelerating = true;
         spotIndex = 0;
         targetLocation = spots[spotIndex];
+        baseSpeed = horseSpeed;
+    }
+
+    private void OnEnable()
+    {
+        if (gallopAudioSource != null) gallopAudioSource.Play();
+    }
+
+    private void OnDisable()
+    {
+        if (gallopAudioSource != null) gallopAudioSource.Stop();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (gallopAudioSource != null) gallopAudioSource.volume = horseSpeed / baseSpeed;
+
         if (spotIndex != 1 && spotIndex != 3)
         {
             animator.speed = horseSpeed * animCoefSpeed;
@@ -79,7 +94,15 @@ public class HorseControl : MonoBehaviour
 
             targetLocation = spots[spotIndex];
 
-            if ((spotIndex == 0 || spotIndex == 2) && isDeccelerating) StartCoroutine(AccelerationCoroutine());
+            if ((spotIndex == 0 || spotIndex == 2) && isDeccelerating)
+            {
+                StartCoroutine(AccelerationCoroutine());
+                if (gallopAudioSource != null) gallopAudioSource.Play();
+            }
+            else
+            {
+                if (gallopAudioSource != null) gallopAudioSource.Stop();
+            }
         }
     }
 
@@ -118,7 +141,6 @@ public class HorseControl : MonoBehaviour
     public IEnumerator DeccelerationCoroutine()
     {
         isDeccelerating = true;
-        baseSpeed = horseSpeed;
 
         for (int i = 0; i < 7; ++i)
         {
