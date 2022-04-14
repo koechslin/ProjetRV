@@ -5,9 +5,12 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class CollisionVibration : MonoBehaviour
 {
-    private XRBaseController xr;
     private bool isGrab;
 
+    [SerializeField]
+    private XRBaseController rHand;
+    [SerializeField]
+    private XRBaseController lHand;
     [SerializeField] 
     private XRGrabInteractable xrGrab;
 
@@ -23,7 +26,23 @@ public class CollisionVibration : MonoBehaviour
         if(xrGrab.isSelected)
         {
             Debug.Log("Vibration");
-            xr.SendHapticImpulse(0.7f, 2f);
+            rHand.SendHapticImpulse(0.7f, 2f);
         }
+        
+        /**
+        if(xrGrab.isSelected)
+        {
+            if ()
+            {
+                Debug.Log("Right Vibration");
+                rHand.SendHapticImpulse(0.7f, 2f);
+            }
+
+            else if ()
+            {
+                Debug.Log("Left Vibration");
+                lHand.SendHapticImpulse(0.7f, 2f);
+            }
+        }*/
     }
 }
