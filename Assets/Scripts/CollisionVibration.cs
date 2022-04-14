@@ -14,11 +14,6 @@ public class CollisionVibration : MonoBehaviour
     [SerializeField] 
     private XRGrabInteractable xrGrab;
 
-    void Start()
-    {
-        xr = (XRBaseController) GameObject.FindObjectOfType(typeof(XRBaseController));
-    }
-
     void OnCollisionEnter(Collision collision)
     {
         Debug.Log(xrGrab.isSelected);
