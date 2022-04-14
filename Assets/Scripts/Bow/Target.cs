@@ -17,6 +17,10 @@ public class Target : MonoBehaviour, IArrowHittable
     private GameObject floatingPointPrefab;
     [SerializeField]
     private Transform floatingPointSpawnPoint;
+    [SerializeField]
+    private AudioSource audioSource;
+    [SerializeField]
+    private AudioClip arrowHitAudioClip;
 
     private new Rigidbody rigidbody;
     private float[] distances;
@@ -34,6 +38,8 @@ public class Target : MonoBehaviour, IArrowHittable
 
     public void Hit(Arrow arrow, Vector3 hitPoint)
     {
+        audioSource.PlayOneShot(arrowHitAudioClip);
+
         ApplyForce(arrow.transform.forward);
         DisplayPoints(hitPoint);
     }
