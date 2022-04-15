@@ -20,6 +20,10 @@ public class HorseControl : MonoBehaviour
     private Animator animator;
     [SerializeField]
     private float animCoefSpeed;
+    [SerializeField]
+    private AudioSource runningAudioSource;
+    [SerializeField]
+    private AudioSource walkingAudioSource;
 
     private Transform targetLocation;
     private int spotIndex;
@@ -36,6 +40,8 @@ public class HorseControl : MonoBehaviour
         isDeccelerating = true;
         spotIndex = 0;
         targetLocation = spots[spotIndex];
+
+        runningAudioSource.Play(0);
     }
 
     // Update is called once per frame

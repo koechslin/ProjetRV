@@ -40,6 +40,10 @@ public class HorseInteraction : XRBaseInteractable
     private float hapticCoef;
     [SerializeField]
     private GameObject spear;
+    [SerializeField]
+    private AudioSource runningAudioSource;
+    [SerializeField]
+    private AudioSource walkingAudioSource;
 
     private bool isOnHorse = false;
     private Coroutine hapticCoroutineInstance;
@@ -132,6 +136,9 @@ public class HorseInteraction : XRBaseInteractable
         StopCoroutine(hapticCoroutineInstance);
         //Stop running animation
         animator.SetBool("IsRunning", false);
+
+        runningAudioSource.Stop();
+        walkingAudioSource.Stop();
 
         // Prompt player for another lap
         uiText.text = "Voulez-vous refaire un tour ?";
