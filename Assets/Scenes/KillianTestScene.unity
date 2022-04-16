@@ -53260,11 +53260,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77466aec66ce5604abac615dd8ffbcaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activateActionReference: {fileID: 187161793506945269, guid: c348712bda248c246b8c49b3db54643f,
+  activateActionReference: {fileID: -8795625221442556941, guid: c348712bda248c246b8c49b3db54643f,
     type: 3}
   cancelActionReference: {fileID: 268019400663751851, guid: c348712bda248c246b8c49b3db54643f,
     type: 3}
-  confirmTeleportActionReference: {fileID: 187161793506945269, guid: c348712bda248c246b8c49b3db54643f,
+  confirmTeleportActionReference: {fileID: -8795625221442556941, guid: c348712bda248c246b8c49b3db54643f,
     type: 3}
   xrRayInteractor: {fileID: 1208733124}
   teleportationProvider: {fileID: 1748391155}

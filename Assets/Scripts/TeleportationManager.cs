@@ -26,9 +26,7 @@ public class TeleportationManager : MonoBehaviour
 
     private void Start()
     {
-        teleportReticle.SetActive(false);
-
-        xrRayInteractor.enabled = false;
+        DeactivateRay();
     }
 
     private void OnEnable()
@@ -71,8 +69,7 @@ public class TeleportationManager : MonoBehaviour
 
         if (!xrRayInteractor.TryGetCurrent3DRaycastHit(out RaycastHit hit) )
         {
-            xrRayInteractor.enabled = false;
-            isActive = false;
+            DeactivateRay();
             return;
         }
 
@@ -86,9 +83,7 @@ public class TeleportationManager : MonoBehaviour
 
         teleportationProvider.QueueTeleportRequest(request);
 
-        xrRayInteractor.enabled = false;
-        isActive = false;
-        teleportReticle.SetActive(false);
+        DeactivateRay();
     }
 
     private void OnTeleportActivatePerformed(InputAction.CallbackContext callbackContext)
@@ -96,9 +91,7 @@ public class TeleportationManager : MonoBehaviour
         if (isActive || !buttonReleased) return;
 
         buttonReleased = false;
-        xrRayInteractor.enabled = true;
-        isActive = true;
-        teleportReticle.SetActive(true);
+        ActivateRay();
     }
 
     private void OnTeleportActivateCanceled(InputAction.CallbackContext callbackContext)
@@ -107,6 +100,18 @@ public class TeleportationManager : MonoBehaviour
     }
 
     private void OnTeleportCancel(InputAction.CallbackContext callbackContext)
+    {
+        DeactivateRay();
+    }
+
+    public void ActivateRay()
+    {
+        xrRayInteractor.enabled = true;
+        isActive = true;
+        teleportReticle.SetActive(true);
+    }
+
+    public void DeactivateRay()
     {
         xrRayInteractor.enabled = false;
         isActive = false;

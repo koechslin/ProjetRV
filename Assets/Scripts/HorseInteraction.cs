@@ -110,6 +110,7 @@ public class HorseInteraction : MonoBehaviour
         }
 
         playerTransform.GetComponentInChildren<LocomotionSystem>().enabled = false;
+        playerTransform.GetComponentInChildren<TeleportationManager>().DeactivateRay();
 
         trainingHorseParent.SetActive(true);
 
