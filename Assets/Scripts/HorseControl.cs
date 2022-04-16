@@ -24,6 +24,9 @@ public class HorseControl : MonoBehaviour
     private float timeCounterOffset;
     [SerializeField]
     private AudioSource gallopAudioSource;
+    [SerializeField]
+    private AudioSource walkAudioSource;
+
 
     private Transform targetLocation;
     private int spotIndex;
@@ -50,6 +53,7 @@ public class HorseControl : MonoBehaviour
     private void OnDisable()
     {
         if (gallopAudioSource != null) gallopAudioSource.Stop();
+        if (walkAudioSource != null) walkAudioSource.Stop();
     }
 
     // Update is called once per frame
@@ -97,11 +101,13 @@ public class HorseControl : MonoBehaviour
             if ((spotIndex == 0 || spotIndex == 2) && isDeccelerating)
             {
                 StartCoroutine(AccelerationCoroutine());
+                if (walkAudioSource != null) walkAudioSource.Stop();
                 if (gallopAudioSource != null) gallopAudioSource.Play();
             }
             else
             {
                 if (gallopAudioSource != null) gallopAudioSource.Stop();
+                if (walkAudioSource != null) walkAudioSource.Play();
             }
         }
     }
