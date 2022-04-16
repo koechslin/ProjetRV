@@ -22,8 +22,6 @@ public class HorseInteraction : MonoBehaviour
     [SerializeField]
     private Transform playerStopPoint;
     [SerializeField]
-    private Text uiText;
-    [SerializeField]
     private ActionBasedController[] controllers;
     [SerializeField]
     private float hapticAmplitude;
@@ -148,7 +146,6 @@ public class HorseInteraction : MonoBehaviour
         trainingHorseAnimator.SetBool("IsRunning", false);
 
         // Prompt player for another lap
-        uiText.text = "Voulez-vous refaire un tour ?";
         confirmationUI.SetActive(true);
     }
 
