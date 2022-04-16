@@ -40066,6 +40066,8 @@ MonoBehaviour:
   trainingHorseParent: {fileID: 1576228160}
   shield: {fileID: 300473384}
   pnjPanel: {fileID: 841159787}
+  xrOrigin: {fileID: 413034746}
+  mainCameraTransform: {fileID: 616352639}
 --- !u!114 &1273631690
 MonoBehaviour:
   m_ObjectHideFlags: 0

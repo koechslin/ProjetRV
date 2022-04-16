@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.XR.CoreUtils;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.XR.Interaction.Toolkit;
@@ -48,6 +49,10 @@ public class HorseInteraction : MonoBehaviour
     private GameObject shield;
     [SerializeField]
     private GameObject pnjPanel;
+    [SerializeField]
+    private XROrigin xrOrigin;
+    [SerializeField]
+    private Transform mainCameraTransform;
 
     private bool isOnHorse = false;
     private Coroutine hapticCoroutineInstance;
@@ -64,6 +69,13 @@ public class HorseInteraction : MonoBehaviour
         playerTransform.parent = null;
         playerTransform.position = playerStopPoint.position;
         playerTransform.forward = playerStopPoint.forward;
+
+        Vector3 mainCameraForward = mainCameraTransform.forward;
+        Vector3 stopPointForward = playerStopPoint.forward;
+
+        float rotation = Mathf.Acos(Vector3.Dot(mainCameraForward, stopPointForward)) * Mathf.Rad2Deg;
+
+        if (!float.IsInfinity(rotation) && !float.IsNaN(rotation)) xrOrigin.RotateAroundCameraPosition(Vector3.up, rotation);
 
         isOnHorse = false;
 
@@ -85,9 +97,19 @@ public class HorseInteraction : MonoBehaviour
         teleportationManager.enabled = false;
 
         // Place player on top of the horse
-        playerTransform.parent = horseTransform;
-        playerTransform.forward = horseTransform.forward;
-        playerTransform.localPosition = playerPositionOffset;
+        if (!isOnHorse)
+        {
+            playerTransform.parent = horseTransform;
+            playerTransform.forward = horseTransform.forward;
+            playerTransform.localPosition = playerPositionOffset;
+
+            Vector3 mainCameraForward = mainCameraTransform.forward;
+            Vector3 horseForward = horseTransform.forward;
+
+            float rotation = Mathf.Acos(Vector3.Dot(mainCameraForward, horseForward)) * Mathf.Rad2Deg;
+
+            if (!float.IsInfinity(rotation) && !float.IsNaN(rotation)) xrOrigin.RotateAroundCameraPosition(Vector3.up, rotation);
+        }
 
         playerTransform.GetComponentInChildren<LocomotionSystem>().enabled = false;
 
