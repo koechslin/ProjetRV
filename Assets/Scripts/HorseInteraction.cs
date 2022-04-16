@@ -46,37 +46,11 @@ public class HorseInteraction : MonoBehaviour
     private GameObject trainingHorseParent;
     [SerializeField]
     private GameObject shield;
+    [SerializeField]
+    private GameObject pnjPanel;
 
     private bool isOnHorse = false;
     private Coroutine hapticCoroutineInstance;
-    private bool isNear = false;
-
-    private void Start()
-    {
-        selectAction.action.performed += OnHorseSelect;
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (!other.gameObject.layer.Equals(LayerMask.NameToLayer("Player"))) return;
-
-        isNear = true;
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (!other.gameObject.layer.Equals(LayerMask.NameToLayer("Player"))) return;
-
-        isNear = false;
-    }
-
-    private void OnHorseSelect(InputAction.CallbackContext callbackContext)
-    {
-        if (isOnHorse || !isNear) return;
-
-        uiText.text = "Voulez-vous faire un tour de joute ?";
-        confirmationUI.SetActive(true);
-    }
 
     public void OnInteractionDeclined()
     {
@@ -102,6 +76,7 @@ public class HorseInteraction : MonoBehaviour
     public void CloseUI()
     {
         confirmationUI.SetActive(false);
+        pnjPanel.SetActive(false);
     }
 
     public void OnInteractionConfirmation()
