@@ -44,6 +44,8 @@ public class HorseInteraction : MonoBehaviour
     private GameObject spear;
     [SerializeField]
     private GameObject trainingHorseParent;
+    [SerializeField]
+    private GameObject shield;
 
     private bool isOnHorse = false;
     private Coroutine hapticCoroutineInstance;
@@ -92,6 +94,7 @@ public class HorseInteraction : MonoBehaviour
         isOnHorse = false;
 
         spear.SetActive(false);
+        shield.SetActive(false);
 
         trainingHorseParent.SetActive(false);
     }
@@ -127,6 +130,7 @@ public class HorseInteraction : MonoBehaviour
         trainingHorseAnimator.SetBool("IsRunning", true);
 
         spear.SetActive(true);
+        shield.SetActive(true);
     }
 
     public void OnHorseEnd()

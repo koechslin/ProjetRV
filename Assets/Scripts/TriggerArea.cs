@@ -17,5 +17,6 @@ public class TriggerArea : MonoBehaviour
         if (!other.gameObject.layer.Equals(LayerMask.NameToLayer("Player"))) return;
 
         characterInteraction.enabled = false;
+        characterInteraction.OnClose();
     }
 }

@@ -11,21 +11,13 @@ public class HittableCharacter : Hittable
     private float hapticAmplitude;
     [SerializeField]
     private float hapticDuration;
-
-    private ActionBasedController[] controllers;
-
-    private void Start()
-    {
-        controllers = FindObjectsOfType<ActionBasedController>();
-    }
+    [SerializeField]
+    private ActionBasedController rightHand;
 
     public override void Hit()
     {
         audioSource.PlayOneShot(hitAudioClip);
 
-        foreach (ActionBasedController xrController in controllers)
-        {
-            xrController.SendHapticImpulse(hapticAmplitude, hapticDuration);
-        }
+        rightHand.SendHapticImpulse(hapticAmplitude, hapticDuration);
     }
 }

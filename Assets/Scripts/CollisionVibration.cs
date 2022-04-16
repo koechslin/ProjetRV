@@ -11,17 +11,23 @@ public class CollisionVibration : MonoBehaviour
     private XRBaseController rHand;
     [SerializeField]
     private XRBaseController lHand;
-    [SerializeField] 
+    [SerializeField]
     private XRGrabInteractable xrGrab;
+    [SerializeField]
+    private float hapticDuration;
+    [SerializeField]
+    private float hapticAmplitude;
 
-    void OnCollisionEnter(Collision collision)
+    void OnCollisionStay(Collision collision)
     {
-        Debug.Log(xrGrab.isSelected);
+        // Debug.Log(xrGrab.isSelected);
 
         if(xrGrab.isSelected)
         {
-            Debug.Log("Vibration");
-            rHand.SendHapticImpulse(0.7f, 2f);
+            XRDirectInteractor tmpInteractor = xrGrab.firstInteractorSelecting as XRDirectInteractor;
+            XRBaseController tmpController = tmpInteractor.GetComponentInParent<XRBaseController>();
+            if (tmpController == rHand) rHand.SendHapticImpulse(hapticAmplitude, hapticDuration);
+            else lHand.SendHapticImpulse(hapticAmplitude, hapticDuration);
         }
         
         /**
