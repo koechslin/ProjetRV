@@ -18379,7 +18379,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a3fc5fb0424e3a4d8f06b4c8cd52cd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneNameToLoad: KillianTestScene
+  sceneNameToLoad: MainScene
 --- !u!1001 &1336422676
 PrefabInstance:
   m_ObjectHideFlags: 0
