@@ -18703,7 +18703,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1100229457}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.37, y: -2, z: 26.36}
+  m_LocalPosition: {x: -1.37, y: -1.8, z: 26.36}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1030503797}
@@ -32569,10 +32569,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "T\xE9l\xE9portation : \n\tUtiliser le bouton primaire pour activer ou
-    confirmer la t\xE9l\xE9portation\n\tUtiliser le bouton secondaire pour annuler
-    la t\xE9l\xE9portation\n\nInteraction avec les interfaces :\n\tUtiliser la g\xE2chette
-    de l'index\n\nSaisie des objets :\n\tUtiliser la g\xE2chette du majeur"
+  m_text: "T\xE9l\xE9portation (sur la main droite) : \n\tUtiliser le bouton primaire
+    pour activer ou confirmer la t\xE9l\xE9portation\n\tUtiliser le bouton secondaire
+    pour annuler la t\xE9l\xE9portation\n\nInteraction avec les interfaces (sur les
+    deux mains) :\n\tUtiliser la g\xE2chette de l'index\n\nSaisie des objets (sur
+    les deux mains) :\n\tUtiliser la g\xE2chette du majeur"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 357373129a45906419dc40346b07f601, type: 2}
   m_sharedMaterial: {fileID: 331651748217723393, guid: 357373129a45906419dc40346b07f601,
