@@ -14044,15 +14044,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 413034744}
-  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 10.01, y: -2, z: -9.82}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 12.5, y: -1.8, z: 2.43}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 457640302}
   - {fileID: 1748391152}
   m_Father: {fileID: 0}
   m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &413034746
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -55089,7 +55089,7 @@ MonoBehaviour:
   confirmationUI: {fileID: 149437287}
   playerTransform: {fileID: 413034745}
   horseTransform: {fileID: 1273631686}
-  playerPositionOffset: {x: 0, y: 0.1, z: 0}
+  playerPositionOffset: {x: 0, y: 0.1, z: 0.5}
   playerStopPoint: {fileID: 1554869463}
   controllers:
   - {fileID: 278421455}

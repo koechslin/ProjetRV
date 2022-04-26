@@ -97,16 +97,18 @@ public class HorseInteraction : MonoBehaviour
         // Place player on top of the horse
         if (!isOnHorse)
         {
-            playerTransform.parent = horseTransform;
-            playerTransform.forward = horseTransform.forward;
-            playerTransform.localPosition = playerPositionOffset;
-
             Vector3 mainCameraForward = mainCameraTransform.forward;
+            mainCameraForward.y = 0.0f;
             Vector3 horseForward = horseTransform.forward;
+            horseForward.y = 0.0f;
 
-            float rotation = Mathf.Acos(Vector3.Dot(mainCameraForward, horseForward)) * Mathf.Rad2Deg;
+            Quaternion tmpQuaternion = Quaternion.FromToRotation(mainCameraForward, horseForward);
+            tmpQuaternion.ToAngleAxis(out float angleRotation, out Vector3 axisRotation);
+            xrOrigin.RotateAroundCameraPosition(axisRotation, angleRotation);
 
-            if (!float.IsInfinity(rotation) && !float.IsNaN(rotation)) xrOrigin.RotateAroundCameraPosition(Vector3.up, rotation);
+            playerTransform.parent = horseTransform;
+            // playerTransform.forward = horseTransform.forward;
+            playerTransform.localPosition = playerPositionOffset;
         }
 
         playerTransform.GetComponentInChildren<LocomotionSystem>().enabled = false;
